@@ -1,46 +1,62 @@
 #!/usr/bin/python
 import sqlite3 as lite
 import sys
+import wx
+import sql_gui
 
-def get_csv_headers(data):
-    headers = ""
-    for x in range (0, len(cur.description)):
-        headers += cur.description[x][0] + ','
-    return headers[:-1]
+class SqlDriver():
+                   
+    def __init__(self, dbname):
+        self.con = self.connect(dbname)
+        self.cur = self.con.cursor()
 
-def to_csv(csv, data):
-    for row in data:
-        csv += '\n'
-        for col in row:
-            csv += str(col) + ','
-        csv = csv[:-1]
-    return csv
+    def get_csv_headers(self):
+        headers = ""
+        if(self.cur.description == None):
+            return None
+        for x in range (0, len(self.cur.description)):
+            headers += self.cur.description[x][0] + ','
+        return headers[:-1]
 
-def get_meta_data(cur, table_name):
-    cur.execute('PRAGMA table_info(' + table_name + ')')
-    data = cur.fetchall()
-    return to_csv("Metadata:", data)
+    def to_csv(self, csv, data):
+        for row in data:
+            csv += '\n'
+            for col in row:
+                csv += str(col) + ','
+            csv = csv[:-1]
+        return csv
 
-def get_tables():
-    cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
-    data = cur.fetchall()
-    return to_csv("Tables:", data)
+    def get_meta_data(self, table_name):
+        self.cur.execute('PRAGMA table_info(' + table_name + ')')
+        data = self.cur.fetchall()
+        return self.to_csv("Metadata:", data)
 
-def connect(dbname):
-    return lite.connect(dbname)
+    def get_tables(self):
+        self.cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        data = self.cur.fetchall()
+        return self.to_csv("Tables:", data)
 
-def test(cur):
-    cur.execute("create table songs( id int(10), track_name varchar(100))")
-    cur.execute("insert into songs values(1, 'Wrong')")
-    cur.execute("insert into songs values(2, 'Blind')")
-    cur.execute('select * from songs')
-    data = cur.fetchall()
-    headers = get_csv_headers(data)
+    def connect(self, dbname):
+        return lite.connect(dbname)
 
-    print "data: \n" + to_csv(headers, data)
-    print get_meta_data(cur, 'songs')
-    print get_tables()
-    cur.execute("drop table songs")
+    def test(self):
+        self.cur.execute("create table songs( id int(10), track_name varchar(100))")
+        self.cur.execute("insert into songs values(1, 'Wrong')")
+        self.cur.execute("insert into songs values(2, 'Blind')")
+        self.cur.execute('select * from songs')
+        data = self.cur.fetchall()
+        headers = self.get_csv_headers()
+
+        print "data: \n" + self.to_csv(headers, data)
+        print self.get_meta_data('songs')
+        print self.get_tables()
+
+    def close(self):
+        try:
+            self.cur.execute('drop table songs')
+        except:
+            print "already dropped"
+        self.con.close()
 
 if __name__ == "__main__":
     try:
@@ -49,10 +65,9 @@ if __name__ == "__main__":
         print "usage: command (dbname)"
         sys.exit(1)
 
-    print(dbname)
-    con = connect(dbname)
-    cur = con.cursor()
-    try:
-        test(cur)
-    finally:
-        con.close() 
+    app = wx.App()
+    gui = sql_gui.Gui(None)
+    driver = SqlDriver(dbname)
+    gui.init_gui(driver)
+    driver.test()
+    app.MainLoop()
