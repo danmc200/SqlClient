@@ -3,6 +3,7 @@ import sqlite3 as lite
 import sys
 import wx
 import sql_gui
+import os
 
 class SqlDriver():
                    
@@ -45,7 +46,8 @@ class SqlDriver():
 
 def test(driver):
     driver.cur.execute("create table songs(id int(10), track_name varchar(100))")
-    test_fle = open('songs.csv', 'r')
+    filename = os.path.dirname(os.path.realpath(__file__)) + "/songs.csv"
+    test_fle = open(filename, 'r')
     for line in test_fle.readlines():
         driver.cur.execute("insert into songs values(" + line + ")")
 def test_close(cur):
@@ -53,17 +55,3 @@ def test_close(cur):
         cur.execute('drop table songs')
     except:
         print "already dropped"
-
-if __name__ == "__main__":
-    try:
-        dbname = sys.argv[1]
-    except:
-        print "usage: command (dbname)"
-        sys.exit(1)
-
-    app = wx.App()
-    gui = sql_gui.Gui(None)
-    driver = SqlDriver(dbname)
-    gui.init_gui(driver)
-    test(driver)
-    app.MainLoop()

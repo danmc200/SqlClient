@@ -6,7 +6,8 @@ map q :call Quit() <CR>
 
 python << EOF
 import vim
-import sqlite3_complete, vim_ui, vim_listener
+import drivers.sqlite3_complete as sqlite3_complete
+import vim_ui, vim_listener
 
 dbname = vim.eval('dbname')
 

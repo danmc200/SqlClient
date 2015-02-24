@@ -1,0 +1,2 @@
+select * from songs;
+insert into songs values(5, 'Jesus');
