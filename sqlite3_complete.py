@@ -39,13 +39,9 @@ class SqlDriver():
     def connect(self, dbname):
         return lite.connect(dbname)
 
-    def read_test(self):
-        test_fle = open('songs.csv', 'r')
-        return test_fle
-
     def test(self):
         self.cur.execute("create table songs(id int(10), track_name varchar(100))")
-        test_fle = self.read_test()
+        test_fle = open('songs.csv', 'r')
         for line in test_fle.readlines():
             self.cur.execute("insert into songs values(" + line + ")")
         self.cur.execute('select * from songs')
