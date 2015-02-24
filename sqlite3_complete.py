@@ -39,25 +39,18 @@ class SqlDriver():
     def connect(self, dbname):
         return lite.connect(dbname)
 
-    def test(self):
-        self.cur.execute("create table songs(id int(10), track_name varchar(100))")
-        test_fle = open('songs.csv', 'r')
-        for line in test_fle.readlines():
-            self.cur.execute("insert into songs values(" + line + ")")
-        self.cur.execute('select * from songs')
-        data = self.cur.fetchall()
-        headers = self.get_csv_headers()
-
-        print "data: \n" + self.to_csv(headers, data)
-        print self.get_meta_data('songs')
-        print self.get_tables()
-
     def close(self):
         try:
             self.cur.execute('drop table songs')
         except:
             print "already dropped"
         self.con.close()
+
+def test(driver):
+    driver.cur.execute("create table songs(id int(10), track_name varchar(100))")
+    test_fle = open('songs.csv', 'r')
+    for line in test_fle.readlines():
+        driver.cur.execute("insert into songs values(" + line + ")")
 
 if __name__ == "__main__":
     try:
@@ -70,5 +63,5 @@ if __name__ == "__main__":
     gui = sql_gui.Gui(None)
     driver = SqlDriver(dbname)
     gui.init_gui(driver)
-    driver.test()
+    test(driver)
     app.MainLoop()
