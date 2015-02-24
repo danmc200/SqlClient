@@ -40,7 +40,7 @@ class SqlDriver():
         return lite.connect(dbname)
 
     def close(self):
-        test_close()
+        test_close(self.cur)
         self.con.close()
 
 def test(driver):
@@ -48,9 +48,9 @@ def test(driver):
     test_fle = open('songs.csv', 'r')
     for line in test_fle.readlines():
         driver.cur.execute("insert into songs values(" + line + ")")
-def test_close():
+def test_close(cur):
     try:
-        self.cur.execute('drop table songs')
+        cur.execute('drop table songs')
     except:
         print "already dropped"
 
