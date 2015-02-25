@@ -3,6 +3,7 @@ let g:query=""
 let dbname=input('Enter Database name: ')
 map <Return> :call Select() <CR>
 map q :call Quit() <CR>
+let &omnifunc='sql_client#Complete'
 
 python << EOF
 import vim
@@ -16,6 +17,11 @@ v_thread = vim_listener.VimListener(vim, ui, dbname)
 v_thread.start()
 
 EOF
+
+function! sql_client#Complete(findstart, base)
+    let comp_list = ['select']
+    return comp_list
+endfunc
 
 function! Quit()
     let quit=input('Quit?(y/n)')

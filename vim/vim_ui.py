@@ -23,9 +23,9 @@ class Ui():
             query = self.get_query()
             try:
                 results = self.driver.cur.execute(query)
+                self.show_results(results)
             except:
                 print "error executing"
-            self.show_results(results)
             
     def show_results(self, data):
         results = self.driver.to_csv("", data)
