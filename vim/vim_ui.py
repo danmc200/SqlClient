@@ -10,9 +10,7 @@ class Ui():
         self.driver = driver
 
     def get_query(self):
-        self.vim.command('norm ^yf;')
-        self.vim.command("let query=getreg('\"')")
-        query = self.vim.eval('query')
+        query = self.vim.eval('g:query')
         return query
 
     def select(self):
