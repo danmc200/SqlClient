@@ -1,5 +1,6 @@
 let g:action=""
 let g:query=""
+
 let dbname=input('Enter Database name: ')
 map <Return> :call Select() <CR>
 map q :call Quit() <CR>
@@ -21,7 +22,7 @@ EOF
 function! sql_client#Complete(findstart, base)
     let comp_list = ['select']
     return comp_list
-endfunc
+endfunction
 
 function! Quit()
     let quit=input('Quit?(y/n)')

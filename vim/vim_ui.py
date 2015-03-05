@@ -26,7 +26,7 @@ class Ui():
                 print "error executing"
             
     def show_results(self, data):
-        results = self.driver.to_csv("", data)
+        results = self.driver.to_csv(self.driver.get_csv_headers(), data)
         results = results.split('\n')
         cb = self.vim.windows[window_viewer].buffer
         cb[:] = None
