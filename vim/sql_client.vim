@@ -1,5 +1,6 @@
 let g:action=""
 let g:query=""
+let g:comp_list=[]
 
 let dbname=input('Enter Database name: ')
 map <Return> :call Select() <CR>
@@ -20,13 +21,17 @@ v_thread.start()
 EOF
 
 function! sql_client#Complete(findstart, base)
-    let comp_list = ['select']
+    let g:action="complete"
+    while g:comp_list == []
+    endwhile
+    let comp_list=g:comp_list
+    let g:comp_list=[]
     return comp_list
 endfunction
 
 function! Quit()
     let quit=input('Quit?(y/n)')
-    if quit =~ 'y'
+    if quit == 'y'
         let g:action="quit"
     endif
 endfunction

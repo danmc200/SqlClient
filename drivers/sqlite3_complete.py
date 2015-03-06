@@ -27,15 +27,15 @@ class SqlDriver():
             csv = csv[:-1]
         return csv
 
-    def get_meta_data(self, table_name):
+    def get_metadata(self, table_name):
         self.cur.execute('PRAGMA table_info(' + table_name + ')')
         data = self.cur.fetchall()
-        return self.to_csv("Metadata:", data)
+        return self.to_csv("", data)
 
     def get_tables(self):
         self.cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
         data = self.cur.fetchall()
-        return self.to_csv("Tables:", data)
+        return self.to_csv("", data)
 
     def connect(self, dbname):
         return lite.connect(dbname)

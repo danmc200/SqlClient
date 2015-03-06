@@ -11,7 +11,8 @@ class VimListener(threading.Thread):
         self.kill = False
         self.actions = {
             'quit': self.quit,
-            'select': self.ui.select}
+            'select': self.ui.select,
+            'complete': self.ui.complete}
 
     def quit(self):
         self.kill = True
