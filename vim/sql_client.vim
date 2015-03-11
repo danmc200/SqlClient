@@ -40,7 +40,7 @@ endfunction
 
 function! SelectToBlankLine()
     y
-    /^\n
+    /^\s*\n
     :call Select()
 endfunction
 
