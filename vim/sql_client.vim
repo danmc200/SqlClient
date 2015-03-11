@@ -22,6 +22,7 @@ EOF
 
 function! sql_client#Complete(findstart, base)
     let g:action="complete"
+    "block until listener loads
     while g:comp_list == []
     endwhile
     let comp_list=g:comp_list

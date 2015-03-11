@@ -19,7 +19,9 @@ class Ui():
         cur_win = self.vim.current.window
         cursor = cur_win.cursor
         chars = cur_win.buffer[cursor[0]-1]
-        omni = chars.split(' ')[-1]
+        omni = ""
+        if(len(chars) > 0):
+            omni = chars.split(' ')[-1]
         self.complete.set_complete(omni)
 
     def select(self):

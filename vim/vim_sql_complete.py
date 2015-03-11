@@ -1,4 +1,3 @@
-#!/usr/bin/python
 def read_keywords(filename):
     keywords = []
     keywords_fle = open(filename, 'r')
@@ -8,6 +7,8 @@ def read_keywords(filename):
 
 def filter_list(part, keywords):
     dictionary = []
+    if(len(part) == 1):
+        return keywords
     for word in keywords:
         if((len(word) >= len(part)) and (part.upper() == word[:len(part)])):
             dictionary.append(word)

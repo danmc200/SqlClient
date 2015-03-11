@@ -1,3 +1,7 @@
 #!/usr/bin/python
-import os
-os.system('vim -c ":source sql_client.vim" -o editor viewer')
+import os, sys
+if len(sys.argv) > 1:
+    filename = sys.argv[1]
+else:
+    filename = "editor"
+os.system('vim -c ":source sql_client.vim" -o ' + filename + ' viewer')
