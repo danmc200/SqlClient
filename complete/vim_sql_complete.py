@@ -1,3 +1,4 @@
+import os
 def read_keywords(filename):
     keywords = []
     keywords_fle = open(filename, 'r')
@@ -20,7 +21,8 @@ class Complete():
         self.vim = vim
         self.driver = driver
         self.keywords = []
-        self.keywords = read_keywords('sqlite_keywords.txt')
+        filename = os.path.dirname(os.path.realpath(__file__)) + "/sqlite_keywords.txt"
+        self.keywords = read_keywords(filename)
 
 
     def set_complete(self, part):

@@ -1,5 +1,5 @@
 import threading, time
-import sqlite3_complete
+import drivers.sqlite3_complete as sqlite3_complete
 
 class VimListener(threading.Thread):
 
