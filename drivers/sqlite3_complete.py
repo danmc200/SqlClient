@@ -1,8 +1,5 @@
 #!/usr/bin/python
 import sqlite3 as lite
-import sys
-import wx
-import sql_gui
 import os
 
 class SqlDriver():

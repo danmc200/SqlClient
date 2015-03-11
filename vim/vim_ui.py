@@ -1,4 +1,4 @@
-import vim_sql_complete
+import complete.vim_sql_complete as vim_sql_complete
 window_editor=0
 window_viewer=1
 
