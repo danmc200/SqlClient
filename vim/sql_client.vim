@@ -38,7 +38,7 @@ function! Quit()
 endfunction
 
 function! Select()
-    :norm ^yf;
+    :norm Vy
     :let g:query=getreg('"')
     let g:action="select"
 endfunction
