@@ -38,7 +38,6 @@ function! Quit()
 endfunction
 
 function! Select()
-    :norm Vy
     :let g:query=getreg('"')
     let g:action="select"
 endfunction
