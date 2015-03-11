@@ -4,6 +4,7 @@ let g:comp_list=[]
 
 let dbname=input('Enter Database name: ')
 map <Return> :call Select() <CR>
+"<C-J> = Ctrl-Enter for Ubuntu
 map <C-J> :call SelectToBlankLine() <CR>
 map q :call Quit() <CR>
 let &omnifunc='sql_client#Complete'
