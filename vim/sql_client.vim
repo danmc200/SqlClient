@@ -4,6 +4,7 @@ let g:comp_list=[]
 
 let dbname=input('Enter Database name: ')
 map <Return> :call Select() <CR>
+map <C-J> :call SelectToBlankLine() <CR>
 map q :call Quit() <CR>
 let &omnifunc='sql_client#Complete'
 
@@ -35,6 +36,12 @@ function! Quit()
     if quit == 'y'
         let g:action="quit"
     endif
+endfunction
+
+function! SelectToBlankLine()
+    y
+    /^\n
+    :call Select()
 endfunction
 
 function! Select()
