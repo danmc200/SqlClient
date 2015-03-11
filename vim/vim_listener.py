@@ -16,6 +16,7 @@ class VimListener(threading.Thread):
 
     def quit(self):
         self.kill = True
+        self.ui.close()
 
     def run(self):
         driver = sqlite3_complete.SqlDriver(self.dbname)
@@ -27,4 +28,3 @@ class VimListener(threading.Thread):
                 self.vim.command('let g:action=""')
                 self.actions[action]()
             time.sleep(.1)
-        self.ui.close()
